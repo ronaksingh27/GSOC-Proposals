@@ -35,17 +35,7 @@ export default {
 
       //get Email of token User
       const token = pathname.split("/deleteAccount/")[1];
-      const tokenObj = await env.AUTH_TOKENS.get(token);
-      if( !tokenObj ){
-        return new Response(JSON.stringify({ error: "Invalid or Expired Token" }), {
-          status: 401,
-          headers: { "Content-Type": "application/json" },
-          ...corsHeaders
-        });
-      }
-      const email = JSON.parse(tokenObj).email;
-
-      return deleteAccount(email,token, env);
+      return deleteAccount(token, env);
     }
 
     console.log("redirect triggered");

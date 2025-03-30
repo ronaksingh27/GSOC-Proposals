@@ -1,6 +1,17 @@
 import {Env} from "./interfaces";
+import { corsHeaders } from "./cors";
 
-export default async function deleteAccount(userEmail : string,authToken : string, env : Env){
+export default async function deleteAccount(authToken : string, env : Env){
+
+    const tokenObj = await env.AUTH_TOKENS.get(authToken);
+    if( !tokenObj ){
+      return new Response(JSON.stringify({ error: "Invalid or Expired Token" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+        ...corsHeaders
+      });
+    }
+    const userEmail = JSON.parse(tokenObj).email;
 
     //Fetch the details of the user
     const userData = await env.USER_SHORTENED_URLS.get(userEmail);
