@@ -1,9 +1,12 @@
 import { Env } from './interfaces';
 import {corsHeaders} from './cors';
 import {isValidUrl,generateShortCode} from './utils';
+import { CLOUDFLARE_URL } from './urls';
 
 
 async function handleShorten(request: Request, env: Env) {
+
+    //Checks for Header
     const authHeader = request.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return new Response("Invalid Authentication", {
@@ -21,6 +24,8 @@ async function handleShorten(request: Request, env: Env) {
       });
     }
   
+
+    //HERE IDK
     const body = (await request.json()) as { url: string; expiresIn: number };
     const url = body.url;
     const expiresIn = body.expiresIn;
@@ -34,7 +39,7 @@ async function handleShorten(request: Request, env: Env) {
   
     const existingShortCode = await env.URL_STORE.get(`long:${url}`);
     if (existingShortCode) {
-      return new Response(JSON.stringify({ shortUrl: `https://short-it.litrunner55.workers.dev/${existingShortCode}` }), {
+      return new Response(JSON.stringify({ shortUrl: `${CLOUDFLARE_URL}/${existingShortCode}` }), {
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
@@ -45,7 +50,7 @@ async function handleShorten(request: Request, env: Env) {
     const data = JSON.stringify({ url, expiresAt });
     await env.URL_STORE.put(shortCode, data);
   
-    return new Response(JSON.stringify({ shortUrl: `https://short-it.litrunner55.workers.dev/${shortCode}`, expiresAt }), {
+    return new Response(JSON.stringify({ shortUrl: `${CLOUDFLARE_URL}/${shortCode}`, expiresAt }), {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }

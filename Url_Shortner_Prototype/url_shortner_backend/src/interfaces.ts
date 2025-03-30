@@ -3,5 +3,5 @@ export interface Env {
     URL_STORE: KVNamespace;
     AUTH_TOKENS: KVNamespace;
     CLICKS: KVNamespace;
-    USER_SHORTENED_URLS: KVNamespace;
+    USER_DETAILS: KVNamespace;
   };

@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 async function sendEmail(to: any, magicLink: string) {
 
-    const resend = new Resend(env.RESEND_API_KEY);
+    const resend = new Resend('re_jRgHV37X_PUGB5ZxcEADpqEBTNqAS4uVG');
   
     const { data, error } = await resend.emails.send({
       from: 'onboarding@resend.dev',

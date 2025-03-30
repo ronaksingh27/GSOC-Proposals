@@ -1,7 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import domain from "../domain/domain"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,7 +23,7 @@ export function Shorten({
       // Check if the user is authenticated
       const token = localStorage.getItem("authToken");
       if (!token) {
-        navigate("/login"); // Redirect to login if no token
+        navigate("/"); // Redirect to login if no token
       }
     }, [navigate]);
   
@@ -39,7 +39,7 @@ export function Shorten({
   
       try {
         console.log("request sent");
-        const response = await fetch("https://short-it.litrunner55.workers.dev/shorten", {
+        const response = await fetch(`${domain}/shorten`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

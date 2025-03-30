@@ -2,6 +2,7 @@ import { isValidEmail,generateToken } from './utils';
 import sendEmail from './sendEmail';
 import  {Env}  from './interfaces';
 import {corsHeaders,handleOptions} from './cors';
+import { FRONTEND_URL } from './urls';
 
 async function handleMagicLinkRequest(request: Request, env: Env) {
     const { email } = (await request.json()) as { email: any };
@@ -17,8 +18,11 @@ async function handleMagicLinkRequest(request: Request, env: Env) {
     const expiresAt = Date.now() + 15 * 60 * 1000; // Token expires in 15 minutes
   
     await env.AUTH_TOKENS.put(token, JSON.stringify({ email, expiresAt }), { expirationTtl: 900 });
+
+    const seedUserData = {"shortUrl" : "", "longUrl" : "", "authToken": token,"expiresAt" : null};
+    await env.USER_DETAILS.put(email, JSON.stringify([seedUserData]), { expirationTtl: 900 });
   
-    const frontendUrl = `http://localhost:5173/auth/verify?token=${token}`;
+    const frontendUrl = `${FRONTEND_URL}/auth/verify?token=${token}`;
     await sendEmail(email, frontendUrl);
   
     return new Response("Magic link sent. Check your email.", {

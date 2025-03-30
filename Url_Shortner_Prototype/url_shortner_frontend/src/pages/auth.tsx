@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import domain from "../domain/domain";
 
 const VerifyAuth = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const VerifyAuth = () => {
       }
 
       try {
-        const response = await fetch(`https://short-it.litrunner55.workers.dev/auth/${token}`);
+        const response = await fetch(`${domain}/auth/${token}`);
         const data = await response.json();
 
         if (response.ok) {

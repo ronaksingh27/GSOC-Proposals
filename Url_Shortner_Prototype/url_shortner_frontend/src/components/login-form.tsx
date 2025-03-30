@@ -1,5 +1,5 @@
 import { GalleryVerticalEnd } from "lucide-react"
-
+import domain from "../domain/domain"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,7 +18,8 @@ export function LoginForm({
 
   const handleRequestMagicLink = async () => {
     try {
-      const response = await axios.post("https://short-it.litrunner55.workers.dev/auth/request", { email });
+      console.log(`${domain}/auth/request`);
+      const response = await axios.post(`${domain}/auth/request`, { email });
       console.log(response);
       setMessage("Magic link sent! Check your email.");
     } catch (error) {

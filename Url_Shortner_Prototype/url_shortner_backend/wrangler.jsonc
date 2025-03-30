@@ -19,6 +19,14 @@
 		{
 			"binding": "AUTH_TOKENS",
 			"id": "e0abff9af80a4d88bb7635a02e1715e5"
+		},
+		{
+			"binding": "USER_DETAILS",
+			"id": "f1bc4e05c2ed423db6d7c7e7c29ac8e3"
+		},
+		{
+			"binding": "CLICKS",
+			"id": "1a7d61bebb734d3cbdbfb85f9b4e89ef"
 		}
 	],
 	"compatibility_flags": [

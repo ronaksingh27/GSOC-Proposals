@@ -31,7 +31,7 @@ export default {
       return handleShorten(request, env);
     }
 
-    if( request.method === "DELETE" && pathname === "/deleteAccount"){
+    if( request.method === "DELETE" && pathname.startsWith("/deleteAccount/")){
 
       //get Email of token User
       const token = pathname.split("/deleteAccount/")[1];
