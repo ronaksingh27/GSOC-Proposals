@@ -1,8 +1,9 @@
 import { Env } from './interfaces';
-import {handleOptions} from './cors';
+import {corsHeaders, handleOptions} from './cors';
 import { handleMagicLinkRequest,handleAuthVerification } from './auth';
 import handleShorten from './shorten';
 import handleRedirect from './redirect';
+import deleteAccount from './deleteAccount';
 
 export default {
   async fetch(request: Request, env: Env) {
@@ -28,6 +29,23 @@ export default {
 
     if (request.method === "POST" && pathname === "/shorten") {
       return handleShorten(request, env);
+    }
+
+    if( request.method === "DELETE" && pathname === "/deleteAccount"){
+
+      //get Email of token User
+      const token = pathname.split("/deleteAccount/")[1];
+      const tokenObj = await env.AUTH_TOKENS.get(token);
+      if( !tokenObj ){
+        return new Response(JSON.stringify({ error: "Invalid or Expired Token" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+          ...corsHeaders
+        });
+      }
+      const email = JSON.parse(tokenObj).email;
+
+      return deleteAccount(email,token, env);
     }
 
     console.log("redirect triggered");

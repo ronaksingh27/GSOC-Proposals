@@ -1,6 +1,6 @@
 import { isValidEmail,generateToken } from './utils';
 import sendEmail from './sendEmail';
-import { Env } from './interfaces';
+import  {Env}  from './interfaces';
 import {corsHeaders,handleOptions} from './cors';
 
 async function handleMagicLinkRequest(request: Request, env: Env) {
