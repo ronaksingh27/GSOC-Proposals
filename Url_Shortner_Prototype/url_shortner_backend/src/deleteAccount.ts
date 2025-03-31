@@ -27,11 +27,11 @@ export default async function deleteAccount(authToken: string, env: Env) {
         await env.USER_DETAILS.delete(userEmail);
         await env.AUTH_TOKENS.delete(authToken);
 
-        // Parse the list of shortened URLs and delete them
+        // Parse the list of shortened URLs in URL_STORE and delete them
         const userObj = JSON.parse(userData);
-        const shortenedUrls = userObj.map((user: any) => user.shortCode);
+        const shortenedCodes = userObj.map((user: any) => user.shortCode);
 
-        await Promise.all(shortenedUrls.map(async (shortUrl: string) => {
+        await Promise.all(shortenedCodes.map(async (shortUrl: string) => {
             await env.URL_STORE.delete(shortUrl);
             await env.CLICKS.delete(shortUrl);
         }));

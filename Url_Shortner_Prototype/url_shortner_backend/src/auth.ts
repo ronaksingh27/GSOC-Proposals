@@ -19,7 +19,7 @@ async function handleMagicLinkRequest(request: Request, env: Env) {
   
     await env.AUTH_TOKENS.put(token, JSON.stringify({ email, expiresAt }), { expirationTtl: 900 });
 
-    const seedUserData = {"shortUrl" : "", "longUrl" : "", "authToken": token,"expiresAt" : null};
+    const seedUserData = {"shortCode" : "" ,"shortUrl" : "", "longUrl" : ""};
     await env.USER_DETAILS.put(email, JSON.stringify([seedUserData]), { expirationTtl: 900 });
   
     const frontendUrl = `${FRONTEND_URL}/auth/verify?token=${token}`;
